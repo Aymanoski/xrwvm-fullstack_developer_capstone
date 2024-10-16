@@ -47,4 +47,4 @@ class CarModel(models.Model):
     color = models.CharField(max_length=30, default='Unknown')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     def __str__(self):
-        return self.name+","+self.car_make.name+","+self.year
+        return self.name+","+self.car_make.name+","+str(self.year)
