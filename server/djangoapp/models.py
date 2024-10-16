@@ -31,7 +31,6 @@ class CarMake(models.Model):
 
 class CarModel(models.Model):
     car_make=models.ForeignKey(CarMake,on_delete=models.CASCADE)
-    Dealer_id=models.IntegerField()
     name=models.CharField(max_length=100)
     Cartypes=[
         ('SEDAN','Sedan'),
@@ -40,7 +39,11 @@ class CarModel(models.Model):
         ('HATCHBACK','Hatchback')
     ]
     type=models.CharField(max_length=100,choices=Cartypes)
-    year=models.IntegerField()
+    year = models.IntegerField(default=2023,
+        validators=[
+            MaxValueValidator(2023),
+            MinValueValidator(2015)
+        ])
     color = models.CharField(max_length=30, default='Unknown')
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     def __str__(self):
