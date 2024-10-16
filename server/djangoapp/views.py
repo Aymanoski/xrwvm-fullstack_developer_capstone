@@ -7,7 +7,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth import logout
 from django.contrib import messages
 from datetime import datetime
-
+from .restapis import analyze_review_sentiments, get_request, post_review
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 import logging
@@ -125,5 +125,17 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status":400,"message":"Bad Request"})
 
 # Create a `add_review` view to submit a review
-# def add_review(request):
-# ...
+def add_review(request):
+    if(request.user.is_anonymous==False):
+        data=json.loads(request.body)
+        try:
+            post_review(data)
+            return JsonResponse({"status":200,"message":"succesful"})
+        except:
+            return JsonResponse({"status":401,"message":"error"})
+    else:
+        return JsonResponse({"status":403,"message":unauthorized})
+
+
+
+
