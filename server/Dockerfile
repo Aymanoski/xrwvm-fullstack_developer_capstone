@@ -3,7 +3,7 @@
     ENV PYTHONBUFFERED 1
     ENV PYTHONWRITEBYTECODE 1
 
-    ENV APP=/app
+    ENV APP=/server
 
     # Change the workdir.
     WORKDIR $APP
@@ -18,8 +18,8 @@
 
     EXPOSE 8000
 
-    RUN chmod +x /app/entrypoint.sh
+    RUN chmod +x /server/entrypoint.sh
 
-    ENTRYPOINT ["/bin/bash","/app/entrypoint.sh"]
+    ENTRYPOINT ["/bin/bash","/server/entrypoint.sh"]
 
     CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "djangoproj.wsgi"]
